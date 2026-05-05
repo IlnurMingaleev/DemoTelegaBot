@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "python .cursor/hooks/ruff_lint.py",
+        "matcher": "\\.py$"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "python .cursor/hooks/check_env.py",
+        "matcher": "main\\.py"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+"""ReminderTelegramBot application package."""

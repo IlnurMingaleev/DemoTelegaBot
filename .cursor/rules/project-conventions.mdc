@@ -1,0 +1,52 @@
+---
+description: Project structure, module naming, and logging conventions for ReminderTelegramBot
+alwaysApply: true
+---
+
+# Project Conventions
+
+## Module layout
+
+```
+bot/
+  main.py          — entry point only, no business logic
+  config.py        — all settings via pydantic-settings or os.getenv
+  handlers/        — one file per feature (start, voice, text, timezone)
+  services/        — stateless business logic (stt, nlp, scheduler)
+  database/        — models.py only, no SQL in handlers
+```
+
+## Logging standard
+
+```python
+import logging
+logger = logging.getLogger(__name__)
+
+# ✅ Use module-level logger, not root logger
+logger.info("Reminder set: user=%s dt=%s", user_id, remind_at)
+
+# ❌ Never use print() in production code
+```
+
+## Error responses to user
+
+Always reply with a human-readable Russian message on error:
+
+```python
+await message.answer("❌ Не удалось распознать дату. Попробуйте: «завтра в 15:00»")
+```
+
+## Reminder confirmation message format
+
+```
+✅ Напоминание установлено!
+📅 Дата: 15 мая 2026
+🕒 Время: 10:00
+🌍 Часовой пояс: Europe/Moscow (UTC+3)
+📝 Текст: позвонить маме
+```
+
+## File naming
+
+- Snake_case for all Python files
+- No spaces or dashes in Python module names

@@ -1,0 +1,38 @@
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.sqlite3
+
+# Audio temp files
+audio_cache/
+*.ogg
+*.wav
+*.mp3
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Whisper model cache
+.cache/
+models/
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

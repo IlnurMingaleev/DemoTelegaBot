@@ -1,0 +1,53 @@
+---
+description: Security rules for Telegram bot — no hardcoded secrets, .env usage, .gitignore
+alwaysApply: true
+---
+
+# Bot Security Rules
+
+## Secrets — NEVER hardcode
+
+```python
+# ❌ BAD
+BOT_TOKEN = "123456:ABC-DEF..."
+
+# ✅ GOOD
+import os
+from dotenv import load_dotenv
+load_dotenv()
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN not set in .env")
+```
+
+## .gitignore must always contain
+
+```
+.env
+.env.*
+!.env.example
+*.db
+audio_cache/
+__pycache__/
+*.pyc
+```
+
+## .env.example must be committed (no real values)
+
+```env
+BOT_TOKEN=your_bot_token_here
+ADMIN_CHAT_ID=your_chat_id_here
+MODE=polling
+WEBHOOK_URL=
+WEBHOOK_PORT=8443
+```
+
+## Input validation
+
+- Never pass raw user text to shell commands or SQL without parameterized queries
+- Use `?` placeholders in aiosqlite, never f-strings in SQL
+
+## Webhook security
+
+- Always verify `WEBHOOK_SECRET_TOKEN` header when in webhook mode
+- Use HTTPS only for webhook URL
